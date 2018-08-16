@@ -190,7 +190,10 @@ def clean_up(runtime):
     # clean-up 
     shutil.rmtree(runtime)
     # delete last retrieved file
-    shutil.rmtree(local_files[-1])
+    try:
+        shutil.rmtree(local_files[-1])
+    except:
+        os.remove(local_files[-1])
         
 def main():
 
