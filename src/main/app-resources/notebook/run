@@ -37,7 +37,7 @@ def clean_exit(exit_code):
  
     ciop.log(log_level, msg[exit_code])  
 
-def parametrize(identifier,reference):
+def parametrize(downloaded_reference,reference):
     
     global nb
     
@@ -51,17 +51,20 @@ def parametrize(identifier,reference):
                 
                 if len(names) == 1:
                     
-                    if names[0] == 'data_path':
-                        ciop.log('INFO', 'cell %s updated with \'data_path\' value %s' % (index, tmp_dir))
-                        cell['source'] = 'data_path = \'%s\'' % tmp_dir  
+                    #if names[0] == 'data_path':
+                    #    ciop.log('INFO', 'cell %s updated with \'data_path\' value %s' % (index, tmp_dir))
+                    #    cell['source'] = 'data_path = \'%s\'' % tmp_dir  
         
-                    if names[0] == 'input_identifier':
-                        ciop.log('INFO', 'cell %s updated with \'input_identifier\' value %s' % (index, identifier))
-                        cell['source'] = 'input_identifier = \'%s\'' % identifier  
+                    #if names[0] == 'input_identifier':
+                    #    ciop.log('INFO', 'cell %s updated with \'input_identifier\' value %s' % (index, identifier))
+                    #    cell['source'] = 'input_identifier = \'%s\'' % identifier  
                 
                     if names[0] == 'input_reference':
                         ciop.log('INFO', 'cell %s updated with \'input_reference\' value %s' % (index, reference))
-                        cell['source'] = 'input_reference = \'%s\'' % reference  
+                        cell['source'] = 'input_reference = \'%s\'' % reference
+                    if names[0] == 'downloaded_reference':
+                        ciop.log('INFO', 'cell %s updated with \'downloaded_reference\' value %s' % (index, downloaded_reference))
+                        cell['source'] = 'downloaded_reference = \'%s\'' % downloaded_reference 
                 
                 if len(names) != 2:
                     continue
@@ -148,7 +151,7 @@ def stage_in(reference):
     local_files.append(retrieved)    
   
 
-def execute(identifier, reference, nb_source, nb_target, kernel = 'python2'):
+def execute(downloaded_reference, reference, nb_source, nb_target, kernel = 'python2'):
     
     global nb
    
@@ -156,7 +159,7 @@ def execute(identifier, reference, nb_source, nb_target, kernel = 'python2'):
     
     ciop.log('INFO', 'Execute notebook')
     
-    parametrize(identifier, reference)
+    parametrize(downloaded_reference, reference)
     
     # execute the notebook
     ep = ExecutePreprocessor(timeout=50000, kernel_name=kernel)
@@ -222,8 +225,10 @@ def main():
     
       # execute the notebook
       nb_source = os.path.join('/application', 'notebook', 'libexec', 'input.ipynb')
-      nb_target = os.path.join(runtime, 'result.ipynb')  
-      execute(identifiers[-1], reference, nb_source, nb_target, 'python2')  
+      nb_target = os.path.join(runtime, 'result.ipynb')
+      # we can pass directly the downloaded data reference path
+      execute(local_files[-1], reference, nb_source, nb_target, 'python2')
+      #execute(identifiers[-1], reference, nb_source, nb_target, 'python2')
     
       # publish
       publish(runtime)   
