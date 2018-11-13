@@ -62,6 +62,7 @@ def parametrize(downloaded_reference,reference):
                     if names[0] == 'input_reference':
                         ciop.log('INFO', 'cell %s updated with \'input_reference\' value %s' % (index, reference))
                         cell['source'] = 'input_reference = \'%s\'' % reference
+                        
                     if names[0] == 'downloaded_reference':
                         ciop.log('INFO', 'cell %s updated with \'downloaded_reference\' value %s' % (index, downloaded_reference))
                         cell['source'] = 'downloaded_reference = \'%s\'' % downloaded_reference 
