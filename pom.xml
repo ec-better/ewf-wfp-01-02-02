@@ -11,7 +11,7 @@
     <version>3.0.1-docker</version>
   </parent>
   <description>WFP-01-02-02 Landsat-8 reflectances and vegetation indices</description>
-  <version>0.10</version>
+  <version>0.11</version>
   <properties>
     <summary>WFP-01-02-02 Landsat-8 reflectances and vegetation indices</summary>
     <description>WFP-01-02-02 Landsat-8 reflectances and vegetation indices</description>
